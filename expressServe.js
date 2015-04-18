@@ -32,10 +32,12 @@ app.post('/sms', twilio.webhook({
       if (err) {
     console.log(err)
     } else {
-    console.log("it worked!")
+    console.log("it worked!");
+    response.send(twiml);
+
     }
   });
-    response.send(twiml);
+
 
 });
 
