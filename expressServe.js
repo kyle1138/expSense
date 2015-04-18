@@ -14,7 +14,7 @@ app.get('/', function(request, response) {
   msgArr.forEach(function(msg){
     string += '<br>' + msg;
   })
-  response.send(reqB);
+  response.send(JSON.stringify(reqB));
 });
 
 app.post('/sms', twilio.webhook({
@@ -22,7 +22,6 @@ app.post('/sms', twilio.webhook({
 }), function(request, response) {
     console.log(request);
     reqB = request;
-    console.log(request[body]);
     // Create a TwiML response
     var twiml = new twilio.TwimlResponse();
     twiml.message('Hello from Heroku node.js!');
