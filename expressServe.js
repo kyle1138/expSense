@@ -15,7 +15,7 @@ app.get('/', function(request, response) {
   msgArr.forEach(function(msg){
     string += '<br>' + msg;
   })
-  response.send(reqB));
+  response.send(string);
 });
 
 app.post('/sms', twilio.webhook({
