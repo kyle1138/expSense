@@ -15,13 +15,14 @@ app.get('/', function(request, response) {
   msgArr.forEach(function(msg){
     string += '<br>' + msg;
   })
-  response.send(JSON.stringify(reqB , censor(reqB)));
+  response.send(reqB));
 });
 
 app.post('/sms', twilio.webhook({
     validate:false
 }), function(request, response) {
     console.log(request);
+    msgArr.push(request['body']['Body']);
     console.log(request['body']['Body']);
     // Create a TwiML response
     var twiml = new twilio.TwimlResponse();
