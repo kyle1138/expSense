@@ -22,7 +22,7 @@ app.post('/sms', twilio.webhook({
     validate:false
 }), function(request, response) {
     console.log(request);
-    console.log(request['body']);
+    console.log(request['body']['Body']);
     // Create a TwiML response
     var twiml = new twilio.TwimlResponse();
     twiml.message('Hello from Heroku node.js!');
