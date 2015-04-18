@@ -27,6 +27,7 @@ app.post('/sms', twilio.webhook({
     twiml.message('Hello from Heroku node.js!');
 
     // Render the TwiML response as XML
+    debugger;
     response.send(twiml);
 });
 
