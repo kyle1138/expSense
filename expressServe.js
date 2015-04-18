@@ -1,6 +1,7 @@
 var express = require('express');
 var twilio = require('twilio');
 var bodyParser = require('body-parser');
+var fs = require('fs');
 var app = express();
 var msgArr = [];
 var reqB;
@@ -27,8 +28,15 @@ app.post('/sms', twilio.webhook({
     twiml.message('Hello from Heroku node.js!');
 
     // Render the TwiML response as XML
-    debugger;
+    fs.writeFile("req.txt", reqB, function (err) {
+      if (err) {
+    console.log(err)
+    } else {
+    console.log("it worked!")
+    }
+  });
     response.send(twiml);
+
 });
 
 
