@@ -41,7 +41,7 @@ app.get('/', function(request, response) {
   //   string += '<br>' + msg;
   // })
   console.log(uRow);
-  setTimeout(function(){response.json(uRow)},0);
+  setTimeout(function(){response.json(uRow)},100);
 });
 });
 
@@ -100,5 +100,5 @@ app.post('/sms', twilio.webhook({
 
 // Have express create an HTTP server that will listen on port 3000
 // or "process.env.PORT", if defined
-app.listen(process.env.PORT || 8080);
+app.listen(process.env.PORT || 80);
 // app.listen(3000);
