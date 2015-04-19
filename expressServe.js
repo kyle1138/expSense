@@ -9,8 +9,8 @@ var msgArr = [];
 var reqB;
 
 app.set('port', (process.env.PORT || 5000));
-app.use(bodyParser.json({ extended: false }));
-// app.use(bodyParser.urlencoded({extended: true}));
+//app.use(bodyParser.json({ extended: false }));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(request, response) {
@@ -80,17 +80,7 @@ app.post('/sms', twilio.webhook({
     twiml.message('Hello from express node.js!');
 
     // Render the TwiML response as XML
-    fs.writeFile("req.txt", reqB, function (err) {
-      if (err) {
-    console.log(err)
-    } else {
-    console.log("it worked!");
     response.send(twiml);
-
-    }
-  });
-
-
 });
 
 
@@ -100,5 +90,5 @@ app.post('/sms', twilio.webhook({
 
 // Have express create an HTTP server that will listen on port 3000
 // or "process.env.PORT", if defined
-app.listen(process.env.PORT || 80);
+app.listen(process.env.PORT || 8080);
 // app.listen(3000);
