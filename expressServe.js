@@ -2,6 +2,7 @@ var express = require('express');
 var twilio = require('twilio');
 var bodyParser = require('body-parser');
 var fs = require('fs');
+var cors = require('cors');
 var sqlite3 = require("sqlite3").verbose();
 var db = new sqlite3.Database("sense.db");
 var app = express();
@@ -9,11 +10,13 @@ var msgArr = [];
 var reqB;
 
 app.set('port', (process.env.PORT || 5000));
+app.use(cors());
 //app.use(bodyParser.json({ extended: false }));
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/public'));
 
-app.get('/', function(request, response) {
+app.get('/messages', function(request, response) {
   db.all("SELECT * FROM users", function(err, uRow) {
 
 
@@ -58,12 +61,12 @@ app.post('/sms', twilio.webhook({
 
   db.get("SELECT * FROM users WHERE phone = ?", rPhone, function(err, row) {
     if(row){
-      db.run("INSERT INTO messages (message,phone) VALUES(?,?)" , rBody, rPhone, function(err){});
+      db.run("INSERT INTO messages (message,phone,received) VALUES(?,?,?)" , rBody, rPhone,true, function(err){});
     }else{
     db.run("INSERT INTO users (phone) VALUES (?)", rPhone, function(err) {
     if(err) { throw err; }
     // var id = this.lastID; //weird way of getting id of what you just inserted
-    db.run("INSERT INTO messages (message,phone) VALUES(?,?)" , rBody, rPhone, function(err) {
+    db.run("INSERT INTO messages (message,phone,received) VALUES(?,?,?)" , rBody, rPhone,true, function(err) {
       if(err) { throw err; }
 
     });
@@ -83,6 +86,24 @@ app.post('/sms', twilio.webhook({
     response.send(twiml);
 });
 
+
+app.post('/operator', function(request, response) {
+
+
+  var sent = JSON.parse(request);
+  db.run("INSERT INTO messages (message,phone,received) VALUES(?,?,?)" , sent['body'], sent['phone'],false, function(err) {
+    if(err) { throw err; }
+
+  });
+
+
+
+
+    // Create a TwiML response
+
+    // Render the TwiML response as XML
+    response.send(twiml);
+});
 
 
 

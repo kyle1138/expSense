@@ -9,8 +9,9 @@ CREATE TABLE users (
 DROP TABLE IF EXISTS messages;
 CREATE TABLE messages (
   id INTEGER PRIMARY KEY,
-  message TEXT,
+  body TEXT,
   phone INTEGER,
+  received BOOLEAN,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
