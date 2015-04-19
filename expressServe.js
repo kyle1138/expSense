@@ -19,8 +19,8 @@ app.get('/', function(request, response) {
 
 
 
-
-      db.get("SELECT * FROM messages WHERE phone = ?", user.phone, function(err, mRow){
+      console.log('user info is' + user);
+      db.get("SELECT * FROM messages WHERE phone = ?", user['phone'], function(err, mRow){
         if(err){ throw err;}
         uRow[user]['messages'] = mRow;
       })
