@@ -9,16 +9,31 @@ var msgArr = [];
 var reqB;
 
 app.set('port', (process.env.PORT || 5000));
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json({ extended: false }));
+// app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(request, response) {
-  var string = "";
-  msgArr.forEach(function(msg){
-    string += '<br>' + msg;
-  })
-  response.send(string);
+  db.get("SELECT * FROM users", function(err, uRow) {
+    row.forEach(function(user){
+      db.get("SELECT * FROM messages WHERE phone = ?", user.phone, function(err, mRow){
+        if(err){ throw err;}
+        uRow[user][messages] = mRow;
+      })
+    })
+
+
+
+
+  // var string = "";
+  // msgArr.forEach(function(msg){
+  //   string += '<br>' + msg;
+  // })
+  response.json(uRow);
 });
+});
+
+
 
 app.post('/sms', twilio.webhook({
     validate:false
