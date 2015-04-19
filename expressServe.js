@@ -15,7 +15,7 @@ app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(request, response) {
   db.get("SELECT * FROM users", function(err, uRow) {
-    row.forEach(function(user){
+    uRow.forEach(function(user){
       db.get("SELECT * FROM messages WHERE phone = ?", user.phone, function(err, mRow){
         if(err){ throw err;}
         uRow[user][messages] = mRow;
