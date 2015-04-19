@@ -14,12 +14,12 @@ app.use(bodyParser.json({ extended: false }));
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(request, response) {
-  db.get("SELECT * FROM users", function(err, uRow) {
+  db.all("SELECT * FROM users", function(err, uRow) {
     for (var user in uRow) {
 
 
 
-      console.log('user info is' + user);
+      console.log('user info is ' + user);
       db.get("SELECT * FROM messages WHERE phone = ?", user['phone'], function(err, mRow){
         if(err){ throw err;}
         uRow[user]['messages'] = mRow;
