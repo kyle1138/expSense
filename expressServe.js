@@ -15,19 +15,23 @@ app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(request, response) {
   db.all("SELECT * FROM users", function(err, uRow) {
-    for (var user in uRow) {
+
+
+    uRow.forEach(function(user){
+    //for (var phone in uRow) {
 
 
 
-      console.log('user info is ' + user);
-      db.get("SELECT * FROM messages WHERE phone = ?", user['phone'], function(err, mRow){
+      console.log('user info is ' + user.phone);
+      db.all("SELECT * FROM messages WHERE phone = ?", user.phone, function(err, mRow){
         if(err){ throw err;}
-        uRow[user]['messages'] = mRow;
+        console.log('mRow is > ' + mRow);
+        user['messages'] = mRow;
       })
 
+    })
 
-
-    }
+  //  }
 
 
 
@@ -36,7 +40,8 @@ app.get('/', function(request, response) {
   // msgArr.forEach(function(msg){
   //   string += '<br>' + msg;
   // })
-  response.json(uRow);
+  console.log(uRow);
+  setTimeout(function(){response.json(uRow)},0);
 });
 });
 
@@ -95,5 +100,5 @@ app.post('/sms', twilio.webhook({
 
 // Have express create an HTTP server that will listen on port 3000
 // or "process.env.PORT", if defined
-app.listen(process.env.PORT || 80);
+app.listen(process.env.PORT || 8080);
 // app.listen(3000);
