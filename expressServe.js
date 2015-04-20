@@ -11,9 +11,10 @@ var reqB;
 
 app.set('port', (process.env.PORT || 5000));
 app.use(cors());
-app.use(bodyParser.json({ extended: false }));
+
 
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json({ extended: false }));
 app.use(express.static(__dirname + '/public'));
 
 app.get('/messages', function(request, response) {
