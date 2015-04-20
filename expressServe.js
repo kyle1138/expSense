@@ -92,7 +92,7 @@ app.post('/operator', function(request, response) {
 
   console.log(request);
   var sent = JSON.parse(request);
-  db.run("INSERT INTO messages (body,phone,received) VALUES(?,?,?)" , sent['body'], sent['phone'],false, function(err) {
+  db.run("INSERT INTO messages (body,phone,received) VALUES(?,?,?)" , sent['body']['body'], sent['body']['phone'],false, function(err) {
     if(err) { throw err; }
 
   });
