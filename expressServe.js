@@ -3,11 +3,23 @@ var twilio = require('twilio');
 var bodyParser = require('body-parser');
 var fs = require('fs');
 var cors = require('cors');
+var client = new twilio.RestClient(aOne, aTwo);
+
 var sqlite3 = require("sqlite3").verbose();
 var db = new sqlite3.Database("sense.db");
 var app = express();
 var msgArr = [];
 var reqB;
+
+fs.readFile("secret.json", function(err, data) {
+  if (err) {
+    console.log("secret.json fail");
+    console.log(err);
+  } else {
+    var text = data.toString();
+    console.log(text);
+  }
+})
 
 app.set('port', (process.env.PORT || 5000));
 app.use(cors());
