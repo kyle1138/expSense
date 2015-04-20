@@ -61,12 +61,12 @@ app.post('/sms', twilio.webhook({
 
   db.get("SELECT * FROM users WHERE phone = ?", rPhone, function(err, row) {
     if(row){
-      db.run("INSERT INTO messages (message,phone,received) VALUES(?,?,?)" , rBody, rPhone,true, function(err){});
+      db.run("INSERT INTO messages (body,phone,received) VALUES(?,?,?)" , rBody, rPhone,true, function(err){});
     }else{
     db.run("INSERT INTO users (phone) VALUES (?)", rPhone, function(err) {
     if(err) { throw err; }
     // var id = this.lastID; //weird way of getting id of what you just inserted
-    db.run("INSERT INTO messages (message,phone,received) VALUES(?,?,?)" , rBody, rPhone,true, function(err) {
+    db.run("INSERT INTO messages (body,phone,received) VALUES(?,?,?)" , rBody, rPhone,true, function(err) {
       if(err) { throw err; }
 
     });
@@ -91,7 +91,7 @@ app.post('/operator', function(request, response) {
 
 
   var sent = JSON.parse(request);
-  db.run("INSERT INTO messages (message,phone,received) VALUES(?,?,?)" , sent['body'], sent['phone'],false, function(err) {
+  db.run("INSERT INTO messages (body,phone,received) VALUES(?,?,?)" , sent['body'], sent['phone'],false, function(err) {
     if(err) { throw err; }
 
   });

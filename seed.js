@@ -14,9 +14,9 @@ db.run("INSERT INTO users (phone) VALUES (?), (?), (?), ( ?)",
 );
 
 db.run("INSERT INTO messages (phone , body , received) VALUES (?,?,?), (?,?,?), (?,?,?), (?, ?,?)",
-  17187841942,'hi there', true
-  18003828851, 'nice weather we are having', true
-  15165681333, 'i would like to order a pizza', true
+  17187841942,'hi there', true,
+  18003828851, 'nice weather we are having', true,
+  15165681333, 'i would like to order a pizza', true,
   19127880232, 'When is the Party :D', true,
   function(err) {
     if (err) {
