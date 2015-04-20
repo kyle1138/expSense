@@ -84,7 +84,7 @@ app.post('/sms', twilio.webhook({
     twiml.message('Hello from express node.js!');
 
     // Render the TwiML response as XML
-    response.send(twiml);
+    //response.send(twiml);
 });
 
 
