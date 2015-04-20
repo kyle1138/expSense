@@ -91,7 +91,7 @@ app.post('/sms', twilio.webhook({
 app.post('/operator', function(request, response) {
 
 
-  var sent = JSON.parse(request);
+  var sent = request;
   db.run("INSERT INTO messages (body,phone,received) VALUES(?,?,?)" , sent['body'], sent['phone'],false, function(err) {
     if(err) { throw err; }
 
