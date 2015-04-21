@@ -3,7 +3,7 @@ var twilio = require('twilio');
 var bodyParser = require('body-parser');
 var fs = require('fs');
 var cors = require('cors');
-
+var opPostCount = 0;
 
 var sqlite3 = require("sqlite3").verbose();
 var db = new sqlite3.Database("sense.db");
@@ -102,9 +102,9 @@ app.post('/sms', twilio.webhook({
 
 
 app.post('/operator', function(request, response) {
-
+  opPostCount += ;
+  console.log('Operator Post Count is ' + opPostCount);
   var sent = request;
-
 
   client.sms.messages.create({
       to:'+' + sent['body']['phone'].toString(),
