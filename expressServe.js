@@ -17,11 +17,11 @@ var aTwo = '';
 
 
 
-console.log(process.env.TWILIO_ACCOUNT_TOKEN);
+console.log(process.env.TWILIO_AUTH_TOKEN);
 console.log(process.env.TWILIO_ACCOUNT_SID);
 
 
-var client = new twilio.RestClient(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_ACCOUNT_TOKEN);
+var client = new twilio.RestClient(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
 
 app.set('port', (process.env.PORT || 5000));
@@ -37,7 +37,7 @@ app.get('/messages', function(request, response) {
 
 
     uRow.forEach(function(user){
-    
+
 
 
 
