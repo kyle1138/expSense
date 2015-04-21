@@ -16,28 +16,30 @@ var aOne = '';
 var aTwo = '';
 
 
-fs.readFile("first.txt", function(err, data) {
-  if (err) {
-    console.log("secret.json fail");
-    console.log(err);
-  } else {
-    aOne = data.toString();
-    console.log(aOne);
-  }
-})
+// fs.readFile("first.txt", function(err, data) {
+//   if (err) {
+//     console.log("secret.json fail");
+//     console.log(err);
+//   } else {
+//     aOne = data.toString();
+//     console.log(aOne);
+//   }
+// })
+//
+// fs.readFile("second.txt", function(err, data) {
+//   if (err) {
+//     console.log("second fail");
+//     console.log(err);
+//   } else {
+//     aTwo = data.toString();
+//     console.log(aTwo);
+//   }
+// })
 
-fs.readFile("second.txt", function(err, data) {
-  if (err) {
-    console.log("second fail");
-    console.log(err);
-  } else {
-    aTwo = data.toString();
-    console.log(aTwo);
-  }
-})
+console.log(process.env.TWILIO_ACCOUNT_SID);
+console.log(process.env.TWILIO_ACCOUNT_TOKEN);
 
-
-var client = new twilio.RestClient(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_ACCOUNT_TOKEN);
+var client = new twilio.RestClient(process.env.$TWILIO_ACCOUNT_SID, process.env.$TWILIO_ACCOUNT_TOKEN);
 
 
 app.set('port', (process.env.PORT || 5000));
@@ -176,5 +178,5 @@ app.post('/operator', function(request, response) {
 
 // Have express create an HTTP server that will listen on port 3000
 // or "process.env.PORT", if defined
-app.listen(process.env.PORT || 80);
+app.listen(process.env.PORT || 8080);
 // app.listen(3000);
