@@ -37,7 +37,7 @@ app.get('/messages', function(request, response) {
 
 
     uRow.forEach(function(user){
-    //for (var phone in uRow) {
+    
 
 
 
