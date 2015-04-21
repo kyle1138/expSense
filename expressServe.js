@@ -102,7 +102,7 @@ app.post('/sms', twilio.webhook({
 
 
 app.post('/operator', function(request, response) {
-  opPostCount += ;
+  opPostCount ++;
   console.log('Operator Post Count is ' + opPostCount);
   var sent = request;
 
