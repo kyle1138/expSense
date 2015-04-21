@@ -3,23 +3,42 @@ var twilio = require('twilio');
 var bodyParser = require('body-parser');
 var fs = require('fs');
 var cors = require('cors');
-var client = new twilio.RestClient(aOne, aTwo);
+
 
 var sqlite3 = require("sqlite3").verbose();
 var db = new sqlite3.Database("sense.db");
+
 var app = express();
+
 var msgArr = [];
 var reqB;
+var aOne = '';
+var aTwo = '';
 
-fs.readFile("secret.json", function(err, data) {
+
+fs.readFile("first.txt", function(err, data) {
   if (err) {
     console.log("secret.json fail");
     console.log(err);
   } else {
-    var text = data.toString();
-    console.log(text);
+    aOne = data.toString();
+    console.log(aOne);
   }
 })
+
+fs.readFile("second.txt", function(err, data) {
+  if (err) {
+    console.log("second fail");
+    console.log(err);
+  } else {
+    aTwo = data.toString();
+    console.log(aTwo);
+  }
+})
+
+
+var client = new twilio.RestClient(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_ACCOUNT_TOKEN);
+
 
 app.set('port', (process.env.PORT || 5000));
 app.use(cors());
@@ -48,8 +67,6 @@ app.get('/messages', function(request, response) {
     })
 
   //  }
-
-
 
 
   // var string = "";
@@ -102,12 +119,47 @@ app.post('/sms', twilio.webhook({
 
 app.post('/operator', function(request, response) {
 
-  console.log(request);
   var sent = request;
-  db.run("INSERT INTO messages (body,phone,received) VALUES(?,?,?)" , sent['body']['body'], sent['body']['phone'],false, function(err) {
-    if(err) { throw err; }
 
+
+  client.sms.messages.create({
+      to:'+' + sent['body']['phone'].toString(),
+      from:'2132973673',
+      body:sent['body']['body']
+  }, function(error, message) {
+      // The HTTP request to Twilio will run asynchronously. This callback
+      // function will be called when a response is received from Twilio
+      // The "error" variable will contain error information, if any.
+      // If the request was successful, this value will be "falsy"
+      if (!error) {
+          // The second argument to the callback will contain the information
+          // sent back by Twilio for the request. In this case, it is the
+          // information about the text messsage you just sent:
+          db.run("INSERT INTO messages (body,phone,received) VALUES(?,?,?)" , sent['body']['body'], sent['body']['phone'],false, function(err) {
+            if(err) { throw err; }
+
+          });
+          console.log('Success! The SID for this SMS message is:');
+          console.log(message.sid);
+
+          console.log('Message sent on:');
+          console.log(message.dateCreated);
+      } else {
+          console.log('Oops! There was an error.');
+          console.log(error);
+      }
   });
+
+
+
+
+
+  console.log(request);
+
+  // db.run("INSERT INTO messages (body,phone,received) VALUES(?,?,?)" , sent['body']['body'], sent['body']['phone'],false, function(err) {
+  //   if(err) { throw err; }
+  //
+  // });
 
 
 
