@@ -134,20 +134,6 @@ app.post('/operator', function(request, response) {
       }
   });
 
-
-
-
-
-  console.log(request);
-
-  // db.run("INSERT INTO messages (body,phone,received) VALUES(?,?,?)" , sent['body']['body'], sent['body']['phone'],false, function(err) {
-  //   if(err) { throw err; }
-  //
-  // });
-
-
-
-
     // Create a TwiML response
 
     // Render the TwiML response as XML
