@@ -1,5 +1,6 @@
 var express = require('express');
-var twilio = require('twilio');
+var client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+
 var bodyParser = require('body-parser');
 var fs = require('fs');
 var cors = require('cors');
@@ -21,7 +22,7 @@ console.log(process.env.TWILIO_AUTH_TOKEN);
 console.log(process.env.TWILIO_ACCOUNT_SID);
 
 
-var client = new twilio.RestClient(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+// var client = new twilio.RestClient(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
 
 app.set('port', (process.env.PORT || 5000));
@@ -109,7 +110,7 @@ app.post('/operator', function(request, response) {
   var textArray = textBody.split('\n');
 
   textArray.forEach(function(msgPart){
-  client.sms.messages.create({
+  client.messages.create({
       to:'+' + sent['body']['phone'].toString(),
       from:'2132973673',
       body:msgPart
