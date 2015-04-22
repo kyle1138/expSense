@@ -38,7 +38,7 @@ var mDisplay = function(userArray){
       }else{mDiv.className = 'operator';}
       cDiv.appendChild(mDiv);
     })
-    var chatArea = document.createElement('input');
+    var chatArea = document.createElement('textarea');
     chatArea.className = 'chatArea';
     var sendButton = document.createElement('button');
     sendButton.innerHTML = 'Send Message';
