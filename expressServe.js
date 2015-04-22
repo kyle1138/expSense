@@ -106,13 +106,13 @@ app.post('/operator', function(request, response) {
   console.log('Operator Post Count is ' + opPostCount);
   var sent = request;
   var textBody = sent['body']['body'];
-  var n = textBody.search('\n');
-  if(n > 3){console.log('LINE BREAK!!!!!@@#')};
+  var textArray = textBody.split('\n');
 
+  textArray.forEach(function(msgPart){
   client.sms.messages.create({
       to:'+' + sent['body']['phone'].toString(),
       from:'2132973673',
-      body:sent['body']['body']
+      body:msgPart
   }, function(error, message) {
       // The HTTP request to Twilio will run asynchronously. This callback
       // function will be called when a response is received from Twilio
@@ -136,7 +136,7 @@ app.post('/operator', function(request, response) {
           console.log(error);
       }
   });
-
+});
     // Create a TwiML response
 
     // Render the TwiML response as XML
