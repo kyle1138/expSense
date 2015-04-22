@@ -105,6 +105,9 @@ app.post('/operator', function(request, response) {
   opPostCount ++;
   console.log('Operator Post Count is ' + opPostCount);
   var sent = request;
+  var textBody = sent['body']['body'];
+  var n = textBody.search('\n');
+  if(n > 3){console.log('LINE BREAK!!!!!@@#')};
 
   client.sms.messages.create({
       to:'+' + sent['body']['phone'].toString(),
