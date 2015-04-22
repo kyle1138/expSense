@@ -39,12 +39,15 @@ var mDisplay = function(userArray){
       cDiv.appendChild(mDiv);
     })
     var chatArea = document.createElement('input');
+    chatArea.className = 'chatArea';
     var sendButton = document.createElement('button');
+    sendButton.innerHTML = 'Send Message';
 
     sendButton.addEventListener('click', function(){
       console.log('click');
       console.log(chatArea.value.trim() + ' > # ' + user['phone']);
       mSend(chatArea.value.trim() , user['phone']);
+      chatArea.value = '';
     });
 
     chatArea.type = 'textarea';
