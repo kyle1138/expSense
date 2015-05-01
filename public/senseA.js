@@ -78,9 +78,14 @@ var mSend = function(mString,mPhone){
 };
 
 
+intTest = function (){console.log('Test String')}
+intTest2 = function(){setInterval(intTest , 10)}
 
+var testH = document.getElementById('test');
+testH.addEventListener('click' , function(){
 
-
+  return intTest2();
+})
 
 
 mGet();
