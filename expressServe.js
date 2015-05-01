@@ -1,5 +1,6 @@
 var express = require('express');
-var twilio = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+var twilio = require('twilio');
+// (process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
 var bodyParser = require('body-parser');
 var fs = require('fs');
