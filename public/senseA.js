@@ -89,3 +89,69 @@ testH.addEventListener('click' , function(){
 
 
 mGet();
+
+
+// ws addition
+
+
+var chatToo = new WebSocket("ws://kylehogan.nyc:4000");
+// var chatToo = new WebSocket("ws://localhost:4000");
+var info = {namList:[]};
+
+// var talker = function(name , message){
+//
+//
+//
+//   li.innerText = name + " : " + message;
+//   var top = msgBox.firstChild;
+//   msgBox.insertBefore(li , top);
+// }
+
+var userListGen = function(arr){
+  usersList.innerHTML = "";
+  arr.forEach(function(nam){
+  var userNam = document.createElement("li");
+  userNam.innerText = nam;
+  usersList.appendChild(userNam);
+  })
+
+
+}
+
+chatToo.addEventListener("message" , function(evt){
+  mumble = JSON.parse(evt.data);
+  console.log(mumble);
+
+  userListGen(mumble.namList);
+
+})
+
+
+
+
+
+
+
+chatToo.addEventListener("open" , function(){
+  console.log("connected");
+  info["name"] = prompt("What is your username?");
+  if(info["name"] === ""){while(info["name"] === "")
+  {info["name"] = prompt("You must enter a username to chat.");}
+  handle.value = info["name"];
+  info.namList.push(info["name"]);
+  handle.value = info["name"];
+  info["message"] = handle.value + " has joined the chatroom."
+  var join = JSON.stringify(info);
+  chatToo.send(join);}
+  else{
+  info.namList.push(info["name"]);
+  handle.value = info["name"];
+  info["message"] = handle.value + " has joined the chatroom."
+  var join = JSON.stringify(info);
+  chatToo.send(join);}
+})
+
+chatToo.addEventListener("close" , function(){
+  console.log("Disconnected");
+  // talker(info["name"] ,"you have been disconnected");
+})
