@@ -94,7 +94,7 @@ mGet();
 // ws addition
 
 
-var chatToo = new WebSocket("ws://kylehogan.nyc:4000");
+var chatToo = new WebSocket("ws://kyle.princesspeach.nyc:4000");
 // var chatToo = new WebSocket("ws://localhost:4000");
 var info = {namList:[]};
 
