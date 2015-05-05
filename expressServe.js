@@ -76,7 +76,6 @@ app.get('/messages', function(request, response) {
 server.on("connection" , function(ws){
   console.log("there has been a connection.")
   clients.push(ws);
-  setInterval(function(){ws.send("MESSAGE TEST") , 10000});
 
   // post in websocket
 
