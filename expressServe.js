@@ -220,5 +220,5 @@ app.post('/operator', function(request, response) {
 
 // Have express create an HTTP server that will listen on port 3000
 // or "process.env.PORT", if defined
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 80);
 // app.listen(3000);
