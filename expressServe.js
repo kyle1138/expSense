@@ -79,8 +79,8 @@ server.on("connection" , function(ws){
     var rBody = request['body']['Body'];
     console.log(rPhone + " <> " + rBody);
     var infoBack = JSON.stringify({phone:rPhone,message:rBody});
-    ws.send(infoBack);
-    connections.forEach(function(clientWs){clientWs.send(infoBack)});
+    // ws.send(infoBack);
+    clients.forEach(function(clientWs){clientWs.send(infoBack)});
 
 
 
