@@ -51,7 +51,7 @@ app.get('/messages', function(request, response) {
       console.log('user info is ' + user.phone);
       db.all("SELECT * FROM messages WHERE phone = ?", user.phone, function(err, mRow){
         if(err){ throw err;}
-        
+
         user['messages'] = mRow;
       })
 
@@ -77,8 +77,9 @@ server.on("connection" , function(ws){
 
     var rPhone = request['body']['From'];
     var rBody = request['body']['Body'];
+    console.log(rPhone + " <> " + rBody);
     var infoBack = JSON.stringify({phone:rPhone,message:rBody});
-
+    ws.send(infoBack);
     connections.forEach(function(clientWs){clientWs.send(infoBack)});
 
 
