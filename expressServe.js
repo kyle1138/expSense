@@ -85,7 +85,9 @@ server.on("connection" , function(ws){
 
     var rPhone = request['body']['From'];
     var rBody = request['body']['Body'];
-    ws.send(JSON.stringify({phone:rPhone,message:rBody}));
+    var infoBack = JSON.stringify({phone:rPhone,message:rBody});
+
+    connections.forEach(function(clientWs){clientWs.send(infoBack)});
 
 
 
@@ -107,7 +109,7 @@ server.on("connection" , function(ws){
   });
 
       msgArr.push(request['body']['Body']);
-      console.log(request['body']);
+
       // Create a TwiML response
       var twiml = new twilio.TwimlResponse();
       twiml.message('Hello from express node.js!');
