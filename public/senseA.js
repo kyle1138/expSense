@@ -32,7 +32,7 @@ var mDisplay = function(userArray){
     main.appendChild(cDiv);
     user['messages'].forEach(function(msg){
       var mDiv = document.createElement('div');
-      cDiv.id = msg['phone'];
+      cDiv.id = '+' + msg['phone'];
       mDiv.innerText = msg['phone'] + ' : ' +  msg['body'];
       console.log(msg['received']);
       if(msg['received'] == true){
