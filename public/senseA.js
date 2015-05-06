@@ -28,9 +28,11 @@ var mDisplay = function(userArray){
   userArray.forEach(function(user){
     var cDiv = document.createElement('div');
     cDiv.className = 'convo';
+    // cDiv.id = msg['phone'];
     main.appendChild(cDiv);
     user['messages'].forEach(function(msg){
       var mDiv = document.createElement('div');
+      cDiv.id = msg['phone'];
       mDiv.innerText = msg['phone'] + ' : ' +  msg['body'];
       console.log(msg['received']);
       if(msg['received'] == true){
@@ -60,8 +62,6 @@ var mDisplay = function(userArray){
 
 
 
-
-
 var mSend = function(mString,mPhone){
   var url = "http://kyle.princesspeach.nyc/operator";
   var xhr = new XMLHttpRequest();
@@ -71,10 +71,12 @@ var mSend = function(mString,mPhone){
   xhr.addEventListener('load', function(e) {
     console.log('sent');
     console.log(xhr.responseText);
+
   });
   var msgOut = {body:mString,
-  phone:mPhone}
+  phone:mPhone};
   xhr.send(JSON.stringify(msgOut));
+  wsMessage(msgOut , 'operator');
 };
 
 
@@ -96,7 +98,8 @@ mGet();
 
 var chatToo = new WebSocket("ws://kyle.princesspeach.nyc:4000");
 // var chatToo = new WebSocket("ws://localhost:4000");
-var info = {namList:[]};
+
+
 
 // var talker = function(name , message){
 //
@@ -107,49 +110,32 @@ var info = {namList:[]};
 //   msgBox.insertBefore(li , top);
 // }
 
-var userListGen = function(arr){
-  usersList.innerHTML = "";
-  arr.forEach(function(nam){
-  var userNam = document.createElement("li");
-  userNam.innerText = nam;
-  usersList.appendChild(userNam);
-  })
-
+var wsMessage =  function(msgObj , classString){
+  var cDiv = document.getElementById(msgObj.phone);
+  var mBody = document.createElement('li');
+  mBody.className = classString;
+  mBody.innerText = msgObj.message;
+  cDiv.appendChild(mBody);
 
 }
+
+
 
 chatToo.addEventListener("message" , function(evt){
   mumble = JSON.parse(evt.data);
   console.log(mumble);
+  wsMessage(mumble , 'user');
 
-  userListGen(mumble.namList);
 
 })
-
-
-
-
 
 
 
 chatToo.addEventListener("open" , function(){
   console.log("connected");
-  info["name"] = prompt("What is your username?");
-  if(info["name"] === ""){while(info["name"] === "")
-  {info["name"] = prompt("You must enter a username to chat.");}
-  handle.value = info["name"];
-  info.namList.push(info["name"]);
-  handle.value = info["name"];
-  info["message"] = handle.value + " has joined the chatroom."
-  var join = JSON.stringify(info);
-  chatToo.send(join);}
-  else{
-  info.namList.push(info["name"]);
-  handle.value = info["name"];
-  info["message"] = handle.value + " has joined the chatroom."
-  var join = JSON.stringify(info);
-  chatToo.send(join);}
+
 })
+
 
 chatToo.addEventListener("close" , function(){
   console.log("Disconnected");

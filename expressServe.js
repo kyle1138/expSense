@@ -85,7 +85,7 @@ server.on("connection" , function(ws){
 
     var rPhone = request['body']['From'];
     var rBody = request['body']['Body'];
-    ws.send(JSON.stringify({namList:['guy'],name:"kyle",message:rBody}))
+    ws.send(JSON.stringify({phone:rPhone,message:rBody}));
 
 
 
@@ -115,14 +115,6 @@ server.on("connection" , function(ws){
       // Render the TwiML response as XML
       //response.send(twiml);
   });
-
-
-
-
-
-
-
-
 
 
 
@@ -161,13 +153,20 @@ server.on("connection" , function(ws){
     });
 
 
+  })
 
+  ws.on("close" , function(){
+    var escapee = clients.indexOf(ws);
+    clients.splice(escapee,1);
+    namListS.splice(escapee,1);
+    console.log("somebody left");
+    clients.forEach(function(user){user.send("A user has left the room")});
 
   })
+
+
+
 })
-
-
-
 
 
 
