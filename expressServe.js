@@ -24,7 +24,8 @@ var reqB;
 var aOne = '';
 var aTwo = '';
 
-
+var tat = process.env.TWILIO_AUTH_TOKEN;
+var tas = process.env.TWILIO_ACCOUNT_SID;
 
 console.log(process.env.TWILIO_AUTH_TOKEN);
 console.log(process.env.TWILIO_ACCOUNT_SID);
@@ -117,35 +118,35 @@ server.on("connection" , function(ws){
 
 
 
-  ws.on("message" , function(msg){
-
-        msgOut = msg;
-        console.log(msg);
-
-
-    client.sms.messages.create({
-        to:'+15165781916',
-        from:'2132973673',
-        body:msgOut
-    }, function(error, message) {
-        // The HTTP request to Twilio will run asynchronously. This callback
-        // function will be called when a response is received from Twilio
-        // The "error" variable will contain error information, if any.
-        // If the request was successful, this value will be "falsy"
-        if (!error) {
-            // The second argument to the callback will contain the information
-            // sent back by Twilio for the request. In this case, it is the
-            // information about the text messsage you just sent:
-            console.log('Success! The SID for this SMS message is:');
-            console.log(message.sid);
-
-            console.log('Message sent on:');
-            console.log(message.dateCreated);
-        } else {
-            console.log('Oops! There was an error.');
-            console.log(error);
-        }
-    });
+  // ws.on("message" , function(msg){
+  //
+  //       msgOut = msg;
+  //       console.log(msg);
+  //
+  //
+  //   client.sms.messages.create({
+  //       to:'+15165781916',
+  //       from:'2132973673',
+  //       body:msgOut
+  //   }, function(error, message) {
+  //       // The HTTP request to Twilio will run asynchronously. This callback
+  //       // function will be called when a response is received from Twilio
+  //       // The "error" variable will contain error information, if any.
+  //       // If the request was successful, this value will be "falsy"
+  //       if (!error) {
+  //           // The second argument to the callback will contain the information
+  //           // sent back by Twilio for the request. In this case, it is the
+  //           // information about the text messsage you just sent:
+  //           console.log('Success! The SID for this SMS message is:');
+  //           console.log(message.sid);
+  //
+  //           console.log('Message sent on:');
+  //           console.log(message.dateCreated);
+  //       } else {
+  //           console.log('Oops! There was an error.');
+  //           console.log(error);
+  //       }
+  //   });
 
 
   })
@@ -173,11 +174,11 @@ app.post('/operator', function(request, response) {
   var textBody = sent['body']['body'];
   var textArray = textBody.split('\n');
 
-  textArray.forEach(function(msgPart){
+  // textArray.forEach(function(msgPart){
   client.messages.create({
       to:'+' + sent['body']['phone'].toString(),
       from:'2132973673',
-      body:msgPart
+      body:textBody
   }, function(error, message) {
       // The HTTP request to Twilio will run asynchronously. This callback
       // function will be called when a response is received from Twilio
@@ -187,7 +188,7 @@ app.post('/operator', function(request, response) {
           // The second argument to the callback will contain the information
           // sent back by Twilio for the request. In this case, it is the
           // information about the text messsage you just sent:
-          db.run("INSERT INTO messages (body,phone,received) VALUES(?,?,?)" , msgPart, sent['body']['phone'],false, function(err) {
+          db.run("INSERT INTO messages (body,phone,received) VALUES(?,?,?)" , textBody, sent['body']['phone'],false, function(err) {
             if(err) { throw err; }
 
           });
@@ -201,8 +202,8 @@ app.post('/operator', function(request, response) {
           console.log(error);
       }
   });
-  setTimeout(function(){console.log(msgPart)} , 1000);
-});
+
+// });
     // Create a TwiML response
 
     // Render the TwiML response as XML
@@ -210,6 +211,26 @@ app.post('/operator', function(request, response) {
 });
 
 
+
+//
+// var accountSid = 'AC5ef8732a3c49700934481addd5ce1659';
+// var authToken = "{{ auth_token }}";
+// var clientBig = require('twilio')(tas, tat);
+//
+// console.log(tas);
+//
+// clientBig.messages.create({
+//     body: "Jenny please?! I love y",
+//     to: "+15165781916",
+//     from: "+14158141829"
+// }, function(err, message) {
+//     process.stdout.write(message.sid);
+// });
+//
+//
+//
+// var bigMessageURI = "/2010-04-01/Accounts/" + tas + "/Messages";
+//
 
 
 // Have express create an HTTP server that will listen on port 3000
