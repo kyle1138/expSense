@@ -27,18 +27,20 @@ var mGet = function(){
 
 var mDisplay = function(user){
     var cDiv = document.createElement('div');
+    var msgSubDiv = document.createElement('div');
     cDiv.className = 'convo';
     // cDiv.id = msg['phone'];
     main.appendChild(cDiv);
+    cDiv.appendChild(msgSubDiv);
     user['messages'].forEach(function(msg){
       var mDiv = document.createElement('div');
-      cDiv.id = '+' + msg['phone'];
+      msgSubDiv.id = '+' + msg['phone'];
       mDiv.innerText = msg['phone'] + ' : ' +  msg['body'];
       console.log(msg['received']);
       if(msg['received'] == true){
         mDiv.className = 'user';
       }else{mDiv.className = 'operator';}
-      cDiv.appendChild(mDiv);
+      msgSubDiv.appendChild(mDiv);
     })
     var chatArea = document.createElement('textarea');
     chatArea.className = 'chatArea';
