@@ -10,7 +10,8 @@ var mGet = function(){
   xhr.addEventListener('load', function(e) {
     msgObj = JSON.parse(xhr.responseText);
     console.log(msgObj);
-    mDisplay(msgObj);
+    msgObj.forEach(mDisplay);
+    // mDisplay(msgObj);
   });
 
   xhr.send();
@@ -24,8 +25,7 @@ var mGet = function(){
 // }
 
 
-var mDisplay = function(userArray){
-  userArray.forEach(function(user){
+var mDisplay = function(user){
     var cDiv = document.createElement('div');
     cDiv.className = 'convo';
     // cDiv.id = msg['phone'];
@@ -56,9 +56,52 @@ var mDisplay = function(userArray){
     cDiv.appendChild(chatArea);
     cDiv.appendChild(sendButton);
 
-  });
+
 
 };
+
+
+
+
+
+
+
+
+// var mDisplay = function(userArray){
+//   userArray.forEach(function(user){
+//     var cDiv = document.createElement('div');
+//     cDiv.className = 'convo';
+//     // cDiv.id = msg['phone'];
+//     main.appendChild(cDiv);
+//     user['messages'].forEach(function(msg){
+//       var mDiv = document.createElement('div');
+//       cDiv.id = '+' + msg['phone'];
+//       mDiv.innerText = msg['phone'] + ' : ' +  msg['body'];
+//       console.log(msg['received']);
+//       if(msg['received'] == true){
+//         mDiv.className = 'user';
+//       }else{mDiv.className = 'operator';}
+//       cDiv.appendChild(mDiv);
+//     })
+//     var chatArea = document.createElement('textarea');
+//     chatArea.className = 'chatArea';
+//     var sendButton = document.createElement('button');
+//     sendButton.innerHTML = 'Send Message';
+//
+//     sendButton.addEventListener('click', function(){
+//       console.log('click');
+//       console.log(chatArea.value.trim() + ' > # ' + user['phone']);
+//       mSend(chatArea.value.trim() , user['phone']);
+//       chatArea.value = '';
+//     });
+//
+//     chatArea.type = 'textarea';
+//     cDiv.appendChild(chatArea);
+//     cDiv.appendChild(sendButton);
+//
+//   });
+//
+// };
 
 
 
@@ -112,12 +155,18 @@ var chatToo = new WebSocket("ws://kyle.princesspeach.nyc:4000");
 
 var wsMessage =  function(msgObj , classString){
   var cDiv = document.getElementById(msgObj.phone);
+  if(cDiv){
   var mBody = document.createElement('li');
   mBody.className = classString;
   mBody.innerText = msgObj.message;
   cDiv.appendChild(mBody);
+}else{
+  mDisplay(msgObj);
+    var mDiv = document.createElement('div');
+
 
 }
+};
 
 
 

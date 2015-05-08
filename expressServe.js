@@ -165,48 +165,48 @@ server.on("connection" , function(ws){
 
 
 
-//
-// app.post('/operator', function(request, response) {
-//   opPostCount ++;
-//   console.log('Operator Post Count is ' + opPostCount);
-//   var sent = request;
-//   var textBody = sent['body']['body'];
-//   var textArray = textBody.split('\n');
-//
-//   textArray.forEach(function(msgPart){
-//   client.messages.create({
-//       to:'+' + sent['body']['phone'].toString(),
-//       from:'2132973673',
-//       body:msgPart
-//   }, function(error, message) {
-//       // The HTTP request to Twilio will run asynchronously. This callback
-//       // function will be called when a response is received from Twilio
-//       // The "error" variable will contain error information, if any.
-//       // If the request was successful, this value will be "falsy"
-//       if (!error) {
-//           // The second argument to the callback will contain the information
-//           // sent back by Twilio for the request. In this case, it is the
-//           // information about the text messsage you just sent:
-//           db.run("INSERT INTO messages (body,phone,received) VALUES(?,?,?)" , sent['body']['body'], sent['body']['phone'],false, function(err) {
-//             if(err) { throw err; }
-//
-//           });
-//           console.log('Success! The SID for this SMS message is:');
-//           console.log(message.sid);
-//
-//           console.log('Message sent on:');
-//           console.log(message.dateCreated);
-//       } else {
-//           console.log('Oops! There was an error.');
-//           console.log(error);
-//       }
-//   });
-// });
-//     // Create a TwiML response
-//
-//     // Render the TwiML response as XML
-//     // response.send(twiml);
-// });
+
+app.post('/operator', function(request, response) {
+  opPostCount ++;
+  console.log('Operator Post Count is ' + opPostCount);
+  var sent = request;
+  var textBody = sent['body']['body'];
+  var textArray = textBody.split('\n');
+
+  textArray.forEach(function(msgPart){
+  client.messages.create({
+      to:'+' + sent['body']['phone'].toString(),
+      from:'2132973673',
+      body:msgPart
+  }, function(error, message) {
+      // The HTTP request to Twilio will run asynchronously. This callback
+      // function will be called when a response is received from Twilio
+      // The "error" variable will contain error information, if any.
+      // If the request was successful, this value will be "falsy"
+      if (!error) {
+          // The second argument to the callback will contain the information
+          // sent back by Twilio for the request. In this case, it is the
+          // information about the text messsage you just sent:
+          db.run("INSERT INTO messages (body,phone,received) VALUES(?,?,?)" , sent['body']['body'], sent['body']['phone'],false, function(err) {
+            if(err) { throw err; }
+
+          });
+          console.log('Success! The SID for this SMS message is:');
+          console.log(message.sid);
+
+          console.log('Message sent on:');
+          console.log(message.dateCreated);
+      } else {
+          console.log('Oops! There was an error.');
+          console.log(error);
+      }
+  });
+});
+    // Create a TwiML response
+
+    // Render the TwiML response as XML
+    // response.send(twiml);
+});
 
 
 
