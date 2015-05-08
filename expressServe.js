@@ -201,7 +201,7 @@ app.post('/operator', function(request, response) {
           console.log(error);
       }
   });
-  setTimeout(function(){console.log(msgPart)} , 100);
+  setTimeout(function(){console.log(msgPart)} , 1000);
 });
     // Create a TwiML response
 
