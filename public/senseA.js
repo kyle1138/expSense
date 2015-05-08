@@ -62,6 +62,23 @@ var mDisplay = function(user){
 
 
 
+var sendDisplay = function(user){
+  var cDiv = document.getElementById(msgObj.phone);
+  if(cDiv){
+  var mBody = document.createElement('li');
+  mBody.className = classString;
+  mBody.innerText = msgObj.message;
+  cDiv.appendChild(mBody);
+}else{
+  mDisplay(msgObj);
+    var mDiv = document.createElement('div');
+
+
+}
+
+
+};
+
 
 
 
@@ -119,7 +136,13 @@ var mSend = function(mString,mPhone){
   var msgOut = {body:mString,
   phone:mPhone};
   xhr.send(JSON.stringify(msgOut));
-  wsMessage(msgOut , 'operator');
+  var targetDiv = document.getElementById("+" + mPhone);
+  var mDiv = document.createElement('div');
+  mDiv.className = 'operator';
+  console.log(mPhone + ' : ' +  mString);
+  mDiv.innerText = mPhone + ' : ' +  mString;
+  targetDiv.appendChild(mDiv);
+  // wsMessage(msgOut , 'operator');
 };
 
 
@@ -156,9 +179,9 @@ var chatToo = new WebSocket("ws://kyle.princesspeach.nyc:4000");
 var wsMessage =  function(msgObj , classString){
   var cDiv = document.getElementById(msgObj.phone);
   if(cDiv){
-  var mBody = document.createElement('li');
+  var mBody = document.createElement('div');
   mBody.className = classString;
-  mBody.innerText = msgObj.message;
+  mBody.innerText = msgObj.phone + ' : ' +  msgObj.message;
   cDiv.appendChild(mBody);
 }else{
   mDisplay(msgObj);
