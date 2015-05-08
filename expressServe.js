@@ -187,7 +187,7 @@ app.post('/operator', function(request, response) {
           // The second argument to the callback will contain the information
           // sent back by Twilio for the request. In this case, it is the
           // information about the text messsage you just sent:
-          db.run("INSERT INTO messages (body,phone,received) VALUES(?,?,?)" , sent['body']['body'], sent['body']['phone'],false, function(err) {
+          db.run("INSERT INTO messages (body,phone,received) VALUES(?,?,?)" , msgPart, sent['body']['phone'],false, function(err) {
             if(err) { throw err; }
 
           });
@@ -201,6 +201,7 @@ app.post('/operator', function(request, response) {
           console.log(error);
       }
   });
+  setTimeout(function(){console.log(msgPart)} , 100);
 });
     // Create a TwiML response
 
