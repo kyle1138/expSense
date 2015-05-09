@@ -163,7 +163,7 @@ var sendDisplay = function(user){
 
 
 
-var mSend = function(mString,mPhone){
+var msgAjaxSend = function(mString,mPhone){
   var url = "http://kyle.princesspeach.nyc/operator";
   var xhr = new XMLHttpRequest();
 
