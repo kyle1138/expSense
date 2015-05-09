@@ -79,7 +79,7 @@ server.on("connection" , function(ws){
     var rPhone = request['body']['From'];
     var rBody = request['body']['Body'];
     console.log(rPhone + " <> " + rBody);
-    var infoBack = JSON.stringify({phone:rPhone,message:rBody});
+    var infoBack = JSON.stringify({phone:rPhone.slice(1,rPhone.length - 1),message:rBody});
     // ws.send(infoBack);
     clients.forEach(function(clientWs){clientWs.send(infoBack)});
 
@@ -141,6 +141,7 @@ server.on("connection" , function(ws){
 
             console.log('Message sent on:');
             console.log(message.dateCreated);
+            // clients.forEach(function(clientWs){clientWs.send(opToUserMsg)});
         } else {
             console.log('Oops! There was an error.');
             console.log(error);

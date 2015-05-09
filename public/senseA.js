@@ -62,6 +62,44 @@ var mDisplay = function(user){
 
 };
 
+var mNewDisplay = function(user){
+    var cDiv = document.createElement('div');
+    var msgSubDiv = document.createElement('div');
+    cDiv.className = 'convo';
+    main.appendChild(cDiv);
+    cDiv.appendChild(msgSubDiv);
+    var msgDiv = document.createElement('div');
+    msgSubDiv.id = '+' + user['phone'];
+    msgDiv.innerText = user['phone'] + ' : ' +  user['message'];
+    console.log(user);
+    msgDiv.className = 'user';
+      // if(msg['received'] == true){
+      //   mDiv.className = 'user';
+      // }else{mDiv.className = 'operator';}
+      msgSubDiv.appendChild(msgDiv);
+
+    var chatArea = document.createElement('textarea');
+    chatArea.className = 'chatArea';
+    var sendButton = document.createElement('button');
+    sendButton.innerHTML = 'Send Message';
+
+    sendButton.addEventListener('click', function(){
+      console.log('click');
+      console.log(chatArea.value.trim() + ' > # ' + user['phone']);
+      msgWSSend(chatArea.value.trim() , user['phone']);
+      chatArea.value = '';
+    });
+
+    chatArea.type = 'textarea';
+    cDiv.appendChild(chatArea);
+    cDiv.appendChild(sendButton);
+
+
+
+};
+
+
+
 
 
 var sendDisplay = function(user){
@@ -179,8 +217,8 @@ var wsMessage =  function(msgObj , classString){
   mBody.innerText = msgObj.phone + ' : ' +  msgObj.message;
   cDiv.appendChild(mBody);
 }else{
-  mDisplay(msgObj);
-    var mDiv = document.createElement('div');
+  mNewDisplay(msgObj);
+    // var mDiv = document.createElement('div');
 
 
 }
