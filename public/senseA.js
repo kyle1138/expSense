@@ -50,7 +50,7 @@ var mDisplay = function(user){
     sendButton.addEventListener('click', function(){
       console.log('click');
       console.log(chatArea.value.trim() + ' > # ' + user['phone']);
-      mSend(chatArea.value.trim() , user['phone']);
+      msgWSSend(chatArea.value.trim() , user['phone']);
       chatArea.value = '';
     });
 
@@ -124,6 +124,7 @@ var sendDisplay = function(user){
 
 
 
+
 var mSend = function(mString,mPhone){
   var url = "http://kyle.princesspeach.nyc/operator";
   var xhr = new XMLHttpRequest();
@@ -169,14 +170,6 @@ var chatToo = new WebSocket("ws://kyle.princesspeach.nyc:4000");
 
 
 
-// var talker = function(name , message){
-//
-//
-//
-//   li.innerText = name + " : " + message;
-//   var top = msgBox.firstChild;
-//   msgBox.insertBefore(li , top);
-// }
 
 var wsMessage =  function(msgObj , classString){
   var cDiv = document.getElementById(msgObj.phone);
@@ -192,6 +185,22 @@ var wsMessage =  function(msgObj , classString){
 
 }
 };
+
+var msgWSSend = function(mString,mPhone){
+
+  var msgOut = {body:mString,
+  phone:mPhone};
+  chatToo.send(JSON.stringify(msgOut));
+  var targetDiv = document.getElementById("+" + mPhone);
+  var mDiv = document.createElement('div');
+  mDiv.className = 'operator';
+  console.log(mPhone + ' : ' +  mString);
+  mDiv.innerText = mPhone + ' : ' +  mString;
+  targetDiv.appendChild(mDiv);
+  // wsMessage(msgOut , 'operator');
+};
+
+
 
 
 

@@ -117,7 +117,38 @@ server.on("connection" , function(ws){
 
 
 
+  ws.on("message" , function(msg){
+    var opToUserMsg = JSON.parse(msg);
+    client.messages.create({
+        to:'+' + opToUserMsg['phone'].toString(),
+        from:'2132973673',
+        body:opToUserMsg['body']
+    }, function(error, message) {
+        // The HTTP request to Twilio will run asynchronously. This callback
+        // function will be called when a response is received from Twilio
+        // The "error" variable will contain error information, if any.
+        // If the request was successful, this value will be "falsy"
+        if (!error) {
+            // The second argument to the callback will contain the information
+            // sent back by Twilio for the request. In this case, it is the
+            // information about the text messsage you just sent:
+            db.run("INSERT INTO messages (body,phone,received) VALUES(?,?,?)" , opToUserMsg['body'], opToUserMsg['phone'],false, function(err) {
+              if(err) { throw err; }
 
+            });
+            console.log('Success! The SID for this SMS message is:');
+            console.log(message.sid);
+
+            console.log('Message sent on:');
+            console.log(message.dateCreated);
+        } else {
+            console.log('Oops! There was an error.');
+            console.log(error);
+        }
+    });
+
+
+  })
 
   ws.on("close" , function(){
     var escapee = clients.indexOf(ws);
@@ -140,7 +171,7 @@ app.post('/operator', function(request, response) {
   console.log('Operator Post Count is ' + opPostCount);
   var sent = request;
   var textBody = sent['body']['body'];
-  var textArray = textBody.split('\n');
+
 
   // textArray.forEach(function(msgPart){
   client.messages.create({
@@ -200,7 +231,7 @@ app.post('/operator', function(request, response) {
 // var bigMessageURI = "/2010-04-01/Accounts/" + tas + "/Messages";
 //
 
-
+// var textArray = textBody.split('\n');
 // Have express create an HTTP server that will listen on port 3000
 // or "process.env.PORT", if defined
 app.listen(process.env.PORT || 80);
