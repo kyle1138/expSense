@@ -7,6 +7,12 @@
 
   <style>
 
+  ul{
+    list-style-type:none;
+    text-align:left;
+    margin: 0;
+    padding: 0;
+  }
   .convo{
     border:1px solid black;
     margin:20px;
@@ -22,7 +28,7 @@
   }
 
   textarea{
-    width:300px;
+    width:600px;
     height:80px;
     border:1 solid black;
     margin-left: 10;
@@ -32,21 +38,43 @@
 
   }
 
+  #sideBar{
+    height: 100%;
+    width:10%;
+    float:right;
+    background-color: #cfcfbb;
+    position:fixed;
+    right:0;
+    font-size:18px;
+  }
+  #main{
+    width:90%;
+  }
+
+  .userNewMessage{
+    font-weight:bold;
+    background-color: red;
+
+  }
+  .userNewMessage{
+    font-weight:bold;
+    background-color: red;
+
+  }
 
   </style>
   <title>Chat</title>
 </head>
 <body>
-  <div id = 'main'>
-  </div>
-  <div class="chatArea">
-    <ul class="messages">
+  <div id="sideBar" >
+    <ul id="userList">
     </ul>
   </div>
+  <div id = 'main'>
+  </div>
 
-  <textarea id="phoneNumber" placeholder="phone number"></textarea>
-  <input id="inputMessage" placeholder="Type here..."/>
-  <h2 id='test'>TEST</h2>
+
+
   <script src="senseA.js"></script>
 </body>
 </html>
