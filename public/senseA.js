@@ -4,7 +4,7 @@ var userList = document.getElementById('userList');
 var userNumbers = [];
 
 var mGet = function(){
-  var url = "http://kyle.princesspeach.nyc/messages";
+  var url = "http://kyle.princesspeach.nyc:1337/messages";
   var xhr = new XMLHttpRequest();
 
   xhr.open("GET", url);
