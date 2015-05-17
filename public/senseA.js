@@ -41,7 +41,7 @@ var msgDisplay = function(user){
       user['messages'].forEach(function(msg){
         var msgDiv = document.createElement('div');
         msgContainerDiv.id = '+' + msg['phone'];
-        msgDiv.innerText = msg['phone'] +"-"+msg['phone'] + ' : ' +  msg['body'];
+        msgDiv.innerText = msg['handle'] +"-"+msg['phone'] + ' : ' +  msg['body'];
         console.log(msg['received']);
         if(msg['received'] == true){
           msgDiv.className = 'user';
@@ -135,7 +135,7 @@ var wsMessage =  function(msgObj , classString){
   if(chatDiv){
   var mBody = document.createElement('div');
   mBody.className = classString;
-  mBody.innerText = msgObj.phone + ' : ' +  msgObj.message;
+  mBody.innerText = msgObj.handle + "-" + msgObj.phone + ' : ' +  msgObj.message;
   chatDiv.appendChild(mBody);
   var userToAlert = document.getElementById("user" + msgObj.phone);
   userToAlert.className = "userNewMessage";
