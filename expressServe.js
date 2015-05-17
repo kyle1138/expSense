@@ -20,16 +20,31 @@ var db = new sqlite3.Database("sense.db");
 var app = express();
 
 var msgArr = [];
-var reqB;
-var aOne = '';
-var aTwo = '';
 
-var tat = process.env.TWILIO_AUTH_TOKEN;
-var tas = process.env.TWILIO_ACCOUNT_SID;
 
-console.log(process.env.TWILIO_AUTH_TOKEN);
-console.log(process.env.TWILIO_ACCOUNT_SID);
 
+var descriptors = ['red','white','blue','black', 'easy','anonymous', 'dark', 'the last',
+'daring','jumping','wylde','dangerous','screaming','bad news' , 'american'];
+var namesForUsers = ['shirt','hat','jack','bill','fan','ranger','hero', 'villain',
+ 'swordsman', 'unicorn', 'gunfighter','rider','ranger','warrior','waiter','gangster','outlaw','master'];
+
+var generatedUserNames = [];
+
+var nameGenerator = function(){
+    var unique = false;
+    while (unique === false){
+      unique = true;
+      var frontIndex = Math.floor(Math.random() * descriptors.length);
+      var backIndex = Math.floor(Math.random() * namesForUsers.length);
+      var nameBuilt = descriptors[frontIndex] + " " + namesForUsers[backIndex];
+      generatedUserNames.forEach(name){
+        if(name === nameBuilt){unique = false}
+      }
+    }
+    generatedUserNames.push(nameBuilt);
+    return nameBuilt;
+
+}
 
 var client = new twilio.RestClient(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
@@ -89,7 +104,7 @@ server.on("connection" , function(ws){
       if(row){
         db.run("INSERT INTO messages (body,phone,received) VALUES(?,?,?)" , rBody, rPhone,true, function(err){});
       }else{
-      db.run("INSERT INTO users (phone) VALUES (?)", rPhone, function(err) {
+      db.run("INSERT INTO users (phone,handle) VALUES (?,?)", rPhone, nameGenerator(), function(err) {
       if(err) { throw err; }
       // var id = this.lastID; //weird way of getting id of what you just inserted
       db.run("INSERT INTO messages (body,phone,received) VALUES(?,?,?)" , rBody, rPhone,true, function(err) {
