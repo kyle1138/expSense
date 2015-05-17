@@ -97,8 +97,8 @@ server.on("connection" , function(ws){
     var rPhone = request['body']['From'];
     var rBody = request['body']['Body'];
     console.log(rPhone + " <> " + rBody);
-    var infoBack = JSON.stringify({phone:rPhone.slice(1,rPhone.length),message:rBody});
-    // ws.send(infoBack);
+    var infoBack = JSON.stringify({phone:rPhone.slice(1,rPhone.length),message:rBody,handle:row.handle});
+
     clients.forEach(function(clientWs){clientWs.send(infoBack)});
 
 
@@ -106,16 +106,23 @@ server.on("connection" , function(ws){
     db.get("SELECT * FROM users WHERE phone = ?", rPhone, function(err, row) {
       if(row){
         db.run("INSERT INTO messages (body,phone,received) VALUES(?,?,?)" , rBody, rPhone,true, function(err){});
+
+        var infoBack = JSON.stringify({phone:rPhone.slice(1,rPhone.length),message:rBody,handle:row.handle});
+        clients.forEach(function(clientWs){clientWs.send(infoBack)});
+
       }else{
-      db.run("INSERT INTO users (phone,handle) VALUES (?,?)", rPhone, nameGenerator(), function(err) {
+        var handleToAssign = nameGenerator();
+      db.run("INSERT INTO users (phone,handle) VALUES (?,?)", rPhone, handleToAssign, function(err) {
       if(err) { throw err; }
       // var id = this.lastID; //weird way of getting id of what you just inserted
       db.run("INSERT INTO messages (body,phone,received) VALUES(?,?,?)" , rBody, rPhone,true, function(err) {
-        if(err) { throw err; }
+          if(err) { throw err; }
 
+        });
       });
-    });
-  }
+      var infoBack = JSON.stringify({phone:rPhone.slice(1,rPhone.length),message:rBody,handle:handleToAssign});
+      clients.forEach(function(clientWs){clientWs.send(infoBack)});
+    }
 
 
   });
