@@ -97,11 +97,7 @@ server.on("connection" , function(ws){
     var rPhone = request['body']['From'];
     var rBody = request['body']['Body'];
     console.log(rPhone + " <> " + rBody);
-    var infoBack = JSON.stringify({phone:rPhone.slice(1,rPhone.length),message:rBody,handle:row.handle});
-
-    clients.forEach(function(clientWs){clientWs.send(infoBack)});
-
-
+    
 
     db.get("SELECT * FROM users WHERE phone = ?", rPhone, function(err, row) {
       if(row){
