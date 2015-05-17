@@ -2,6 +2,8 @@
 var main = document.getElementById('main');
 var userList = document.getElementById('userList');
 var userNumbers = [];
+var cannedMessages = ["Hello, and welcome to Sense", "Thanks! Let me take that information into consideration",
+"Movies are great entertainment, don't you agree?", "Example of a canned message to send"];
 
 
 
@@ -39,7 +41,7 @@ var msgDisplay = function(user){
       user['messages'].forEach(function(msg){
         var msgDiv = document.createElement('div');
         msgContainerDiv.id = '+' + msg['phone'];
-        msgDiv.innerText = msg['phone'] + ' : ' +  msg['body'];
+        msgDiv.innerText = msg['phone'] +"-"+msg['phone'] + ' : ' +  msg['body'];
         console.log(msg['received']);
         if(msg['received'] == true){
           msgDiv.className = 'user';
@@ -49,7 +51,7 @@ var msgDisplay = function(user){
     }else{
       var msgDiv = document.createElement('div');
       msgContainerDiv.id = '+' + user['phone'];
-      msgDiv.innerText = user['phone'] + ' : ' +  user['message'];
+      msgDiv.innerText = user['handle'] + "-" + user['phone'] + ' : ' +  user['message'];
       console.log(user);
       msgDiv.className = 'user';
       msgContainerDiv.appendChild(msgDiv);
@@ -102,6 +104,17 @@ var sendDisplay = function(user){
 
 
 };
+
+
+var msgDropDown = function(){
+  var dropDown = document.createElement('dropdown');
+  cannedMessages.forEach(function(msg){
+
+  })
+
+}
+
+
 
 
 

@@ -23,10 +23,12 @@ var msgArr = [];
 
 
 
-var descriptors = ['red','white','blue','black', 'easy','anonymous', 'dark', 'the last',
-'daring','jumping','wylde','dangerous','screaming','bad news' , 'american'];
+var descriptors = ['red','white','blue','black', 'imperial', 'marial', 'presidential',
+'easy','anonymous', 'dark', 'the last','daring','jumping','wylde','dangerous',
+'screaming','bad news' , 'american','star'];
 var namesForUsers = ['shirt','hat','jack','bill','fan','ranger','hero', 'villain',
- 'swordsman', 'unicorn', 'gunfighter','rider','ranger','warrior','waiter','gangster','outlaw','master'];
+ 'swordsman', 'unicorn', 'gunfighter','rider','ranger','warrior','waiter','gangster',
+ 'outlaw','master','watcher','stallion','lord','engineer','captain','scout','pilot'];
 
 var generatedUserNames = [];
 
@@ -97,7 +99,7 @@ server.on("connection" , function(ws){
     var rPhone = request['body']['From'];
     var rBody = request['body']['Body'];
     console.log(rPhone + " <> " + rBody);
-    
+
 
     db.get("SELECT * FROM users WHERE phone = ?", rPhone, function(err, row) {
       if(row){
