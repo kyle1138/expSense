@@ -37,14 +37,17 @@ var nameGenerator = function(){
       var frontIndex = Math.floor(Math.random() * descriptors.length);
       var backIndex = Math.floor(Math.random() * namesForUsers.length);
       var nameBuilt = descriptors[frontIndex] + " " + namesForUsers[backIndex];
-      generatedUserNames.forEach(name){
-        if(name === nameBuilt){unique = false}
+
+      generatedUserNames.forEach(function(name){
+          if(name === nameBuilt){unique = false}
+        });
+
       }
-    }
+
     generatedUserNames.push(nameBuilt);
     return nameBuilt;
 
-}
+};
 
 var client = new twilio.RestClient(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
