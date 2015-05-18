@@ -23,12 +23,15 @@ var msgArr = [];
 
 
 
-var descriptors = ['red','white','blue','black', 'imperial', 'marial', 'presidential',
-'easy','anonymous', 'dark', 'the last','daring','jumping','wylde','dangerous',
-'screaming','bad news' , 'american','star'];
-var namesForUsers = ['shirt','hat','jack','bill','fan','ranger','hero', 'villain',
+var descriptors = ['red','white','blue','black', 'imperial', 'martial', 'presidential',
+'easy','anonymous', 'galactic','federal','cyber','dark', 'the last','daring','jumping','wylde',
+'dangerous','screaming','bad news' , 'american','star','night','iron','notorious',
+'mysterious','glowing','singing','no-named'];
+
+var namesForUsers = ['shirt','hat','agent','viper','jack','bill','fan','ranger','hero', 'villain',
  'swordsman', 'unicorn', 'gunfighter','rider','ranger','warrior','waiter','gangster',
- 'outlaw','master','watcher','stallion','lord','engineer','captain','scout','pilot'];
+ 'outlaw','master','watcher','android','runner','hunter','robot','stallion','lord',
+ 'engineer','captain','scout','pilot','ninja','viking','avenger'];
 
 var generatedUserNames = [];
 

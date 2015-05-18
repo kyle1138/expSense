@@ -41,7 +41,7 @@ var msgDisplay = function(user){
       user['messages'].forEach(function(msg){
         var msgDiv = document.createElement('div');
         msgContainerDiv.id = '+' + msg['phone'];
-        msgDiv.innerText = msg['handle'] +"-"+msg['phone'] + ' : ' +  msg['body'];
+        msgDiv.innerText = user['handle'] +"-"+msg['phone'] + ' : ' +  msg['body'];
         console.log(msg['received']);
         if(msg['received'] == true){
           msgDiv.className = 'user';
