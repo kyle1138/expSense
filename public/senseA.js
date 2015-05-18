@@ -61,6 +61,8 @@ var msgDisplay = function(user){
     chatArea.className = 'chatArea';
     var sendButton = document.createElement('button');
     sendButton.innerHTML = 'Send Message';
+    var closeButton = document.createElement('button');
+    closeButton.innerHTML = 'CLOSE TICKET';
 
     sendButton.addEventListener('click', function(){
       console.log('click');
@@ -82,9 +84,25 @@ var msgDisplay = function(user){
       phoneLi.className = 'userSeenMessage';}
     })
 
+    closeButton.addEventListener('click' , function(){
+        var xhr = new XMLHttpRequest();
+        xhr.open("PUT", "http://kyle.princesspeach.nyc:1337/close_ticket");
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.addEventListener('load', function(e) {
+          console.log('sent');
+          console.log(xhr.responseText);
+
+        });
+        // var msgOut = {phone:user["phone"]};
+        xhr.send(JSON.stringify({phone:user["phone"]}));
+
+
+    })
+
     chatArea.type = 'textarea';
     chatDiv.appendChild(chatArea);
     chatDiv.appendChild(sendButton);
+    chatDiv.appendChild(closeButton);
 
 };
 

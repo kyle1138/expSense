@@ -73,7 +73,7 @@ app.get('/messages', function(request, response) {
 
 
       console.log('user info is ' + user.phone);
-      db.all("SELECT * FROM messages WHERE phone = ?", user.phone, function(err, mRow){
+      db.all("SELECT * FROM messages WHERE phone = ?, open_ticket = true", user.phone, function(err, mRow){
         if(err){ throw err;}
 
         user['messages'] = mRow;
@@ -86,6 +86,26 @@ app.get('/messages', function(request, response) {
   setTimeout(function(){response.json(uRow)},100);
 });
 });
+
+
+
+
+
+app.put('/close_ticket', function(request, response) {
+  var ticketToClose = JSON.parse(request);
+
+  db.all("UPDATE message SET open_ticket = false WHERE phone = ?", ticketToClose.phone, function(err, row) {
+    if(err){
+      throw err;
+    }
+    console.log(row);
+  }
+
+
+  setTimeout(function(){response.json(ticketToClose)},100);
+});
+
+
 
 
 
@@ -106,7 +126,7 @@ server.on("connection" , function(ws){
 
     db.get("SELECT * FROM users WHERE phone = ?", rPhone, function(err, row) {
       if(row){
-        db.run("INSERT INTO messages (body,phone,received) VALUES(?,?,?)" , rBody, rPhone,true, function(err){});
+        db.run("INSERT INTO messages (body,phone,open_ticket,received) VALUES(?,?,?,?)" , rBody, rPhone,true,true, function(err){});
 
         var infoBack = JSON.stringify({phone:rPhone.slice(1,rPhone.length),message:rBody,handle:row.handle});
         clients.forEach(function(clientWs){clientWs.send(infoBack)});
@@ -116,7 +136,7 @@ server.on("connection" , function(ws){
       db.run("INSERT INTO users (phone,handle) VALUES (?,?)", rPhone, handleToAssign, function(err) {
       if(err) { throw err; }
       // var id = this.lastID; //weird way of getting id of what you just inserted
-      db.run("INSERT INTO messages (body,phone,received) VALUES(?,?,?)" , rBody, rPhone,true, function(err) {
+      db.run("INSERT INTO messages (body,phone,open_ticket,received) VALUES(?,?,?,?)" , rBody, rPhone,true,true, function(err) {
           if(err) { throw err; }
 
         });
