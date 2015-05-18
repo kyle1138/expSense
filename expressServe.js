@@ -73,7 +73,7 @@ app.get('/messages', function(request, response) {
 
 
       console.log('user info is ' + user.phone);
-      db.all("SELECT * FROM messages WHERE phone = ? AND open_ticket = true", user.phone, function(err, mRow){
+      db.all("SELECT * FROM messages WHERE phone = ? AND open_ticket = ?", user.phone,true, function(err, mRow){
         if(err){ throw err;}
 
         user['messages'] = mRow;
@@ -179,7 +179,7 @@ server.on("connection" , function(ws){
             // The second argument to the callback will contain the information
             // sent back by Twilio for the request. In this case, it is the
             // information about the text messsage you just sent:
-            db.run("INSERT INTO messages (body,phone,received) VALUES(?,?,?)" , opToUserMsg['body'], opToUserMsg['phone'],false, function(err) {
+            db.run("INSERT INTO messages (body,phone,open_ticket,received) VALUES(?,?,?,?)" , opToUserMsg['body'], opToUserMsg['phone'],true,false, function(err) {
               if(err) { throw err; }
 
             });
