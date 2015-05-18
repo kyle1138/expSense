@@ -89,7 +89,7 @@ var msgDisplay = function(user){
         xhr.open("PUT", "http://kyle.princesspeach.nyc:1337/close_ticket");
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xhr.addEventListener('load', function(e) {
-          console.log('sent');
+          console.log({phone:user["phone"]});
           console.log(xhr.responseText);
 
         });

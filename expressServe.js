@@ -92,7 +92,9 @@ app.get('/messages', function(request, response) {
 
 
 app.put('/close_ticket', function(request, response) {
+  console.log(JSON.parse(request));
   var ticketToClose = JSON.parse(request);
+
 
   db.all("UPDATE message SET open_ticket = false WHERE phone = ?", ticketToClose.phone, function(err, row) {
     if(err){
