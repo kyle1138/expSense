@@ -73,7 +73,7 @@ app.get('/messages', function(request, response) {
 
 
       console.log('user info is ' + user.phone);
-      db.all("SELECT * FROM messages WHERE phone = ?, open_ticket = true", user.phone, function(err, mRow){
+      db.all("SELECT * FROM messages WHERE phone = ? AND open_ticket = true", user.phone, function(err, mRow){
         if(err){ throw err;}
 
         user['messages'] = mRow;
