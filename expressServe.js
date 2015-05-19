@@ -102,7 +102,7 @@ app.put('/close_ticket', function(request, response) {
       throw err;
     }
     console.log(row);
-    setTimeout(function(){response.json(ticketToClose)},100);
+    setTimeout(function(){response.json('ticket closed')},100);
   });
 
 
