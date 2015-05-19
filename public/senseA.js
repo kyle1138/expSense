@@ -93,9 +93,11 @@ var msgDisplay = function(user){
           console.log(xhr.responseText);
 
         });
-        // var msgOut = {phone:user["phone"]};
-        xhr.send(JSON.stringify({phone:user["phone"]}));
 
+        console.log('{"phone":' + user["phone"].toString() + '}')
+        // xhr.send(JSON.stringify('{phone:' + user["phone"].toString() + '}'));
+        var msgOut = {phone:user["phone"]};
+          xhr.send(JSON.stringify(msgOut));
 
     })
 
@@ -199,7 +201,7 @@ chatToo.addEventListener("open" , function(){
 
 chatToo.addEventListener("close" , function(){
   console.log("Disconnected");
-  alert("you have been disconnected, try refreshing the browser");
+  // alert("you have been disconnected, try refreshing the browser");
   // talker(info["name"] ,"you have been disconnected");
 })
 
