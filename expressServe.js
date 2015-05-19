@@ -97,7 +97,7 @@ app.put('/close_ticket', function(request, response) {
   // var ticketToClose = JSON.parse(request);
 
 
-  db.all("UPDATE message SET open_ticket = false WHERE phone = ?", ticketToClose.phone, function(err, row) {
+  db.all("UPDATE message SET open_ticket = false WHERE phone = ?", request['body']['phone'], function(err, row) {
     if(err){
       throw err;
     }
