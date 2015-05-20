@@ -140,6 +140,11 @@ server.on("connection" , function(ws){
 
     db.get("SELECT * FROM users WHERE phone = ?", rPhone, function(err, row) {
       console.log(row)
+      if(row.active === 0){
+        db.run("UPDATE users SET handle = ? WHERE phone = ?" , nameGenerator() , rPhone, function(err, row) {
+          if(err) { throw err; }
+        })
+      }
       if(row){
         db.run("UPDATE users SET active = 1 WHERE phone = ?" , rPhone, function(err, row) {
           if(err) { throw err; }
