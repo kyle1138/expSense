@@ -138,7 +138,7 @@ server.on("connection" , function(ws){
 
     db.get("SELECT * FROM users WHERE phone = ?", rPhone, function(err, row) {
       if(row){
-        db.set("UPDATE users SET active = 1 WHERE phone = ?" , rPhone, function(err, row) {
+        db.run("UPDATE users SET active = 1 WHERE phone = ?" , rPhone, function(err, row) {
           if(err) { throw err; }
         })
         db.run("INSERT INTO messages (body,phone,open_ticket,received) VALUES(?,?,?,?)" , rBody, rPhone,true,true, function(err){});
