@@ -93,6 +93,8 @@ app.get('/messages', function(request, response) {
 
 app.put('/close_ticket', function(request, response) {
   console.log(request)
+  var nameIndex = generatedUserNames.indexOf(request['body']['handle']);
+  generatedUserNames.splice(nameIndex , 1);
   // console.log(JSON.parse(request));
   // var ticketToClose = JSON.parse(request);
 
@@ -137,6 +139,7 @@ server.on("connection" , function(ws){
 
 
     db.get("SELECT * FROM users WHERE phone = ?", rPhone, function(err, row) {
+      console.log(row)
       if(row){
         db.run("UPDATE users SET active = 1 WHERE phone = ?" , rPhone, function(err, row) {
           if(err) { throw err; }

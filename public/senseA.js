@@ -94,9 +94,9 @@ var msgDisplay = function(user){
 
         });
 
-        console.log('{"phone":' + user["phone"].toString() + '}')
+        console.log('{"phone":' + user["phone"].toString() + ', handle:' + user["handle"] + '}')
         // xhr.send(JSON.stringify('{phone:' + user["phone"].toString() + '}'));
-        var msgOut = {phone:user["phone"]};
+        var msgOut = {phone:user["phone"],handle:user["handle"]};
           xhr.send(JSON.stringify(msgOut));
 
     })
