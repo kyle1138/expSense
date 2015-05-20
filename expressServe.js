@@ -66,7 +66,7 @@ app.use(bodyParser.json({ extended: false }));
 app.use(express.static(__dirname + '/public'));
 
 app.get('/messages', function(request, response) {
-  db.all("SELECT * FROM users", function(err, uRow) {
+  db.all("SELECT * FROM users WHERE active = 1", function(err, uRow) {
 
 
     uRow.forEach(function(user){
@@ -95,6 +95,14 @@ app.put('/close_ticket', function(request, response) {
   console.log(request)
   // console.log(JSON.parse(request));
   // var ticketToClose = JSON.parse(request);
+
+  db.all("UPDATE users SET active = 0 WHERE phone = ?",request['body']['phone'], function(err, row){
+    if(err){
+      throw err;
+    }
+    console.log(row);
+  })
+
 
 
   db.all("UPDATE messages SET open_ticket = ? WHERE phone = ?", false,request['body']['phone'], function(err, row) {
@@ -130,6 +138,9 @@ server.on("connection" , function(ws){
 
     db.get("SELECT * FROM users WHERE phone = ?", rPhone, function(err, row) {
       if(row){
+        db.set("UPDATE users SET active = 1 WHERE phone = ?" , rPhone, function(err, row) {
+          if(err) { throw err; }
+        })
         db.run("INSERT INTO messages (body,phone,open_ticket,received) VALUES(?,?,?,?)" , rBody, rPhone,true,true, function(err){});
 
         var infoBack = JSON.stringify({phone:rPhone.slice(1,rPhone.length),message:rBody,handle:row.handle});
@@ -137,7 +148,7 @@ server.on("connection" , function(ws){
 
       }else{
         var handleToAssign = nameGenerator();
-      db.run("INSERT INTO users (phone,handle) VALUES (?,?)", rPhone, handleToAssign, function(err) {
+      db.run("INSERT INTO users (phone,handle,active) VALUES (?,?,?)", rPhone, handleToAssign,true, function(err) {
       if(err) { throw err; }
       // var id = this.lastID; //weird way of getting id of what you just inserted
       db.run("INSERT INTO messages (body,phone,open_ticket,received) VALUES(?,?,?,?)" , rBody, rPhone,true,true, function(err) {
