@@ -141,17 +141,18 @@ server.on("connection" , function(ws){
     db.get("SELECT * FROM users WHERE phone = ?", rPhone, function(err, row) {
       console.log(row)
       if(row.active === 0){
-        db.run("UPDATE users SET handle = ? WHERE phone = ?" , nameGenerator() , rPhone, function(err, row) {
+        db.run("UPDATE users SET active = 1 handle = ? WHERE phone = ?" , nameGenerator() , rPhone, function(err, row) {
           if(err) { throw err; }
-        })
-      }
-      if(row){
-        db.run("UPDATE users SET active = 1 WHERE phone = ?" , rPhone, function(err, row) {
-          if(err) { throw err; }
+          clients.forEach(function(clientWs){clientWs.send(infoBack)});
         })
         db.run("INSERT INTO messages (body,phone,open_ticket,received) VALUES(?,?,?,?)" , rBody, rPhone,true,true, function(err){});
 
-        var infoBack = JSON.stringify({phone:rPhone.slice(1,rPhone.length),message:rBody,handle:row.handle});
+      }
+      if(row.active === 1){
+
+        db.run("INSERT INTO messages (body,phone,open_ticket,received) VALUES(?,?,?,?)" , rBody, rPhone,true,true, function(err){});
+
+        // var infoBack = JSON.stringify({phone:rPhone.slice(1,rPhone.length),message:rBody,handle:row.handle});
         clients.forEach(function(clientWs){clientWs.send(infoBack)});
 
       }else{

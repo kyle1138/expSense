@@ -35,7 +35,7 @@ var producter2 = function(arr){
 var newPro = function(arr){
   var ans = [];
   for(var i = 0; i < arr.length; i++){
-    var newArr = 
+    var newArr =
 
 
 
@@ -44,6 +44,27 @@ var newPro = function(arr){
 
 
 
+
+
+
+}
+
+
+
+
+
+
+
+var arrayProducts = function(arr){
+  var beforeSum = 1;
+  var output = [1];
+  for(var i = 1; i<arr.length;i++){
+    output[0] = output[0] * arr[i]
+  }
+
+  for(var i2 = 0; i2 < arr.length;i++){
+    beforeSum *= arr[i2];
+  }
 
 
 

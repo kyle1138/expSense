@@ -91,6 +91,7 @@ var msgDisplay = function(user){
         xhr.addEventListener('load', function(e) {
           console.log({phone:user["phone"]});
           console.log(xhr.responseText);
+          main.removeChild(chatDiv);
 
         });
 
