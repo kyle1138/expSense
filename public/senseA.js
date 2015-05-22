@@ -8,7 +8,8 @@ var cannedMessages = ["Hello, and welcome to Sense", "Thanks! Let me take that i
 
 
 var mGet = function(){
-  var url = "http://kyle.princesspeach.nyc:1337/messages";
+  // var url = "http://kyle.princesspeach.nyc:1337/messages";
+  var url = "http://45.55.219.11:1337/messages";
   var xhr = new XMLHttpRequest();
 
   xhr.open("GET", url);
@@ -144,8 +145,8 @@ mGet();
 
 // ws addition
 
-
-var chatToo = new WebSocket("ws://kyle.princesspeach.nyc:4000");
+var chatToo = new WebSocket("http://45.55.219.11:4000");
+// var chatToo = new WebSocket("ws://kyle.princesspeach.nyc:4000");
 // var chatToo = new WebSocket("ws://localhost:4000");
 
 
