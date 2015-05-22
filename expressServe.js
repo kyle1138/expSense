@@ -140,7 +140,7 @@ server.on("connection" , function(ws){
 
     db.get("SELECT * FROM users WHERE phone = ?", rPhone, function(err, row) {
       console.log(row)
-      if(row.active === 0){
+      if(row && row.active === 0){
         db.run("UPDATE users SET active = 1 handle = ? WHERE phone = ?" , nameGenerator() , rPhone, function(err, row) {
           if(err) { throw err; }
           clients.forEach(function(clientWs){clientWs.send(infoBack)});
@@ -148,7 +148,7 @@ server.on("connection" , function(ws){
         db.run("INSERT INTO messages (body,phone,open_ticket,received) VALUES(?,?,?,?)" , rBody, rPhone,true,true, function(err){});
 
       }
-      if(row.active === 1){
+      if(row && row.active === 1){
 
         db.run("INSERT INTO messages (body,phone,open_ticket,received) VALUES(?,?,?,?)" , rBody, rPhone,true,true, function(err){});
 

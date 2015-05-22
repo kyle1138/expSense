@@ -145,7 +145,7 @@ mGet();
 
 // ws addition
 
-var chatToo = new WebSocket("http://45.55.219.11:4000");
+var chatToo = new WebSocket("ws://45.55.219.11:4000");
 // var chatToo = new WebSocket("ws://kyle.princesspeach.nyc:4000");
 // var chatToo = new WebSocket("ws://localhost:4000");
 
