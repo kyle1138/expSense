@@ -141,8 +141,9 @@ server.on("connection" , function(ws){
     db.get("SELECT * FROM users WHERE phone = ?", rPhone, function(err, row) {
       console.log(row)
       if(row && row.active === 0){
+        var newName = nameGenerator();
         console.log("inactive user being reactivated");
-        db.all("UPDATE users SET active = 1 handle = ? WHERE phone = ?" , nameGenerator() , rPhone, function(err, row) {
+        db.all("UPDATE users SET active = 1 handle = ? WHERE phone = ?" , newName , rPhone, function(err, row) {
           if(err) { throw err; }
           // clients.forEach(function(clientWs){clientWs.send(infoBack)});
         })
