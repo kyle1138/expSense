@@ -154,13 +154,14 @@ server.on("connection" , function(ws){
 
         })
         db.run("INSERT INTO messages (body,phone,open_ticket,received) VALUES(?,?,?,?)" , rBody, rPhone,true,true, function(err){});
+        var infoBack = JSON.stringify({phone:rPhone.slice(1,rPhone.length),message:rBody,handle:newName});
         setTimeout(function(){   clients.forEach(function(clientWs){clientWs.send(infoBack)})    },10)
       }
       if(row && row.active === 1){
         console.log("active user being reactivated");
         db.run("INSERT INTO messages (body,phone,open_ticket,received) VALUES(?,?,?,?)" , rBody, rPhone,true,true, function(err){});
 
-        // var infoBack = JSON.stringify({phone:rPhone.slice(1,rPhone.length),message:rBody,handle:row.handle});
+        var infoBack = JSON.stringify({phone:rPhone.slice(1,rPhone.length),message:rBody,handle:row.handle});
         clients.forEach(function(clientWs){clientWs.send(infoBack)});
 
       }else if(!row){
@@ -173,7 +174,7 @@ server.on("connection" , function(ws){
 
         });
       });
-      // var infoBack = JSON.stringify({phone:rPhone.slice(1,rPhone.length),message:rBody,handle:handleToAssign});
+      var infoBack = JSON.stringify({phone:rPhone.slice(1,rPhone.length),message:rBody,handle:handleToAssign});
       clients.forEach(function(clientWs){clientWs.send(infoBack)});
     }
 
