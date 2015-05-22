@@ -87,7 +87,8 @@ var msgDisplay = function(user){
 
     closeButton.addEventListener('click' , function(){
         var xhr = new XMLHttpRequest();
-        xhr.open("PUT", "http://kyle.princesspeach.nyc:1337/close_ticket");
+        // xhr.open("PUT", "http://kyle.princesspeach.nyc:1337/close_ticket");
+        xhr.open("PUT", "http://45.55.219.11:1337/close_ticket");
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xhr.addEventListener('load', function(e) {
           console.log({phone:user["phone"]});
