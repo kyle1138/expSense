@@ -143,9 +143,15 @@ server.on("connection" , function(ws){
       if(row && row.active === 0){
         var newName = nameGenerator();
         console.log("inactive user being reactivated");
-        db.all("UPDATE users SET active = 1 handle = ? WHERE phone = ?" , newName , rPhone, function(err, row) {
+
+        db.run("UPDATE users SET active = 1 WHERE phone = ?" , newName , rPhone, function(err, row) {
           if(err) { throw err; }
           // clients.forEach(function(clientWs){clientWs.send(infoBack)});
+        })
+
+        db.run("UPDATE users SET handle = ? WHERE phone = ?" , newName , rPhone, function(err, row) {
+          if(err) { throw err; }
+
         })
         db.run("INSERT INTO messages (body,phone,open_ticket,received) VALUES(?,?,?,?)" , rBody, rPhone,true,true, function(err){});
         setTimeout(function(){   clients.forEach(function(clientWs){clientWs.send(infoBack)})    },10)
