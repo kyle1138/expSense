@@ -144,7 +144,7 @@ server.on("connection" , function(ws){
         var newName = nameGenerator();
         console.log("inactive user being reactivated");
 
-        db.run("UPDATE users SET active = 1 WHERE phone = ?" , newName , rPhone, function(err, row) {
+        db.run("UPDATE users SET active = 1 WHERE phone = ?" , rPhone, function(err, row) {
           if(err) { throw err; }
           // clients.forEach(function(clientWs){clientWs.send(infoBack)});
         })
