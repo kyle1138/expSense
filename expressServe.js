@@ -143,10 +143,10 @@ server.on("connection" , function(ws){
       if(row && row.active === 0){
         db.run("UPDATE users SET active = 1 handle = ? WHERE phone = ?" , nameGenerator() , rPhone, function(err, row) {
           if(err) { throw err; }
-          clients.forEach(function(clientWs){clientWs.send(infoBack)});
+          // clients.forEach(function(clientWs){clientWs.send(infoBack)});
         })
         db.run("INSERT INTO messages (body,phone,open_ticket,received) VALUES(?,?,?,?)" , rBody, rPhone,true,true, function(err){});
-
+        setTimeout(function(){   clients.forEach(function(clientWs){clientWs.send(infoBack)})    },10)
       }
       if(row && row.active === 1){
 
