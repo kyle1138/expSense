@@ -141,7 +141,8 @@ server.on("connection" , function(ws){
     db.get("SELECT * FROM users WHERE phone = ?", rPhone, function(err, row) {
       console.log(row)
       if(row && row.active === 0){
-        db.run("UPDATE users SET active = 1 handle = ? WHERE phone = ?" , nameGenerator() , rPhone, function(err, row) {
+        console.log("inactive user being reactivated");
+        db.all("UPDATE users SET active = 1 handle = ? WHERE phone = ?" , nameGenerator() , rPhone, function(err, row) {
           if(err) { throw err; }
           // clients.forEach(function(clientWs){clientWs.send(infoBack)});
         })
@@ -149,7 +150,7 @@ server.on("connection" , function(ws){
         setTimeout(function(){   clients.forEach(function(clientWs){clientWs.send(infoBack)})    },10)
       }
       if(row && row.active === 1){
-
+        console.log("inactive user being reactivated");
         db.run("INSERT INTO messages (body,phone,open_ticket,received) VALUES(?,?,?,?)" , rBody, rPhone,true,true, function(err){});
 
         // var infoBack = JSON.stringify({phone:rPhone.slice(1,rPhone.length),message:rBody,handle:row.handle});
