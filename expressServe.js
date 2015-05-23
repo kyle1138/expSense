@@ -7,6 +7,9 @@ var server = new WSS({port:4000});
 var secret = process.env.SECRET_PW;
 var salt = bcrypt.genSaltSync(10);
 var hash = bcrypt.hashSync(process.env.SECRET_PW, salt);
+
+console.log(bcrypt.compareSync("2c", hash););
+
 console.log(hash);
 console.log(secret);
 var clients = [];
