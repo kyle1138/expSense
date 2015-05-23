@@ -5,6 +5,7 @@ var WSS = require("ws").Server;
 var bcrypt = require('bcryptjs');
 var server = new WSS({port:4000});
 var secret = process.env.SECRET_PW;
+var salt = bcrypt.genSaltSync(10);
 var hash = bcrypt.hashSync(process.env.SECRET_PW, salt);
 console.log(hash);
 console.log(secret);
