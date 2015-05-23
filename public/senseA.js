@@ -1,6 +1,7 @@
 
 var main = document.getElementById('main');
 var userList = document.getElementById('userList');
+var passwordInput = document.getElementById('passwordInput');
 var userNumbers = [];
 var cannedMessages = ["Hello, and welcome to Sense", "Thanks! Let me take that information into consideration",
 "Movies are great entertainment, don't you agree?", "Example of a canned message to send"];
@@ -173,7 +174,7 @@ var wsMessage =  function(msgObj , classString){
 var msgWSSend = function(mString,mPhone){
 
   var msgOut = {body:mString,
-  phone:mPhone};
+  phone:mPhone,password:passwordInput.value};
   chatToo.send(JSON.stringify(msgOut));
   var targetDiv = document.getElementById("+" + mPhone);
   var mDiv = document.createElement('div');

@@ -215,6 +215,8 @@ server.on("connection" , function(ws){
 
   ws.on("message" , function(msg){
     var opToUserMsg = JSON.parse(msg);
+    if(bcrypt.compareSync(opToUserMsg.password, hash)){console.log("SAFE")}
+    else{console.log("FAIL")}
     client.messages.create({
         to:'+' + opToUserMsg['phone'].toString(),
         from:'2132973673',
