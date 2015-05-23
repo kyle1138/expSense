@@ -147,22 +147,30 @@ server.on("connection" , function(ws){
         db.run("UPDATE users SET active = 1 WHERE phone = ?" , rPhone, function(err, row) {
           if(err) { throw err; }
           // clients.forEach(function(clientWs){clientWs.send(infoBack)});
+
+          db.run("UPDATE users SET handle = ? WHERE phone = ?" , newName , rPhone, function(err, row) {
+            if(err) { throw err; }
+
+            db.run("INSERT INTO messages (body,phone,open_ticket,received) VALUES(?,?,?,?)" , rBody, rPhone,true,true, function(err){
+              var infoBack = JSON.stringify({phone:rPhone.slice(1,rPhone.length),message:rBody,handle:newName});
+              setTimeout(function(){   clients.forEach(function(clientWs){clientWs.send(infoBack)})    },10);
+            });
+
+          });
+
+
         })
 
-        db.run("UPDATE users SET handle = ? WHERE phone = ?" , newName , rPhone, function(err, row) {
-          if(err) { throw err; }
 
-        })
-        db.run("INSERT INTO messages (body,phone,open_ticket,received) VALUES(?,?,?,?)" , rBody, rPhone,true,true, function(err){});
-        var infoBack = JSON.stringify({phone:rPhone.slice(1,rPhone.length),message:rBody,handle:newName});
-        setTimeout(function(){   clients.forEach(function(clientWs){clientWs.send(infoBack)})    },10)
+
+
       }
       if(row && row.active === 1){
         console.log("active user being reactivated");
-        db.run("INSERT INTO messages (body,phone,open_ticket,received) VALUES(?,?,?,?)" , rBody, rPhone,true,true, function(err){});
-
-        var infoBack = JSON.stringify({phone:rPhone.slice(1,rPhone.length),message:rBody,handle:row.handle});
-        clients.forEach(function(clientWs){clientWs.send(infoBack)});
+        db.run("INSERT INTO messages (body,phone,open_ticket,received) VALUES(?,?,?,?)" , rBody, rPhone,true,true, function(err){
+          var infoBack = JSON.stringify({phone:rPhone.slice(1,rPhone.length),message:rBody,handle:row.handle});
+          clients.forEach(function(clientWs){clientWs.send(infoBack)});
+        });
 
       }else if(!row){
         var handleToAssign = nameGenerator();
